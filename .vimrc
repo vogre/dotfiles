@@ -7,12 +7,10 @@ set ignorecase
 set smartcase
 set hlsearch
 set incsearch
-
 set showcmd
-
 set gdefault
 set nowrap
-
+set noshowmatch
 set list listchars=tab:»\ ,trail:·
 
 nmap <UP> :call BufMove("bn")<CR>
@@ -133,11 +131,6 @@ let g:tagbar_type_scala = {
     \ ]
 \ }
 
-command SetDub call SetDub()
-function SetDub()
-  set makeprg=dub\ build
-endfunction
-
 set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P
 set laststatus=2
 
@@ -233,10 +226,6 @@ nmap <Leader>lr :set norightleft<cr>
 set path+=/usr/local/include
 set path+=/usr/include/qt4
 
-
-map <silent><F3> :NEXTCOLOR<cr>
-map <silent><F2> :PREVCOLOR<cr>
-
 "cfdg
 "julia
 set columns=80
@@ -245,11 +234,6 @@ au FileType clojure let b:delimitMate_quotes = "\""
 
 nmap <Leader>t :CommandT<CR>
 nmap <Leader>b :CommandTBuffer<CR>
-
-command SetMake call SetMake()
-function! SetMake()
-        set makeprg=dub\ build\ --quiet
-endfunction
 
 " Use neocomplete.
 let g:neocomplete#enable_at_startup = 1
