@@ -1,6 +1,5 @@
 set nocompatible
 call pathogen#infect()
-"set rtp+=/home/vogre/.local/lib/python2.7/site-packages/powerline/bindings/vim
 syntax on
 filetype plugin indent on
 set completeopt-=preview
@@ -341,5 +340,10 @@ if &diff
 endif
 
 
-let g:localvimrc_whitelist='/home/vogre/dev/\(dshtoy\|bar\|daud-js\)/.*'
+let g:localvimrc_whitelist='/home/vogre/dev/\(dshtoy\|gen_obj\|bar\|daud-js\)/.*'
 let g:localvimrc_sandbox=0
+
+au! BufNewFile,BufRead *.glslf,*.glslv set filetype=glsl
+
+nnoremap <silent> <leader>b :CommandTMRU<CR>
+let g:CommandTFileScanner='find'

@@ -1,3 +1,4 @@
+#!/usr/bin/env perl
 use warnings;
 use strict;
 
@@ -74,6 +75,8 @@ sub vimplugins
     getplugin("yegappan", "mru");
     getplugin("derekwyatt", "vim-scala");
     getplugin("wincent", "command-t");
+    getplugin("kana", "vim-textobj-user");
+    getplugin("sgur", "vim-textobj-parameter");
 }
 
 main();
