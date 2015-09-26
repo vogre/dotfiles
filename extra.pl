@@ -77,6 +77,7 @@ sub vimplugins
     getplugin("wincent", "command-t");
     getplugin("kana", "vim-textobj-user");
     getplugin("sgur", "vim-textobj-parameter");
+    getplugin("rhysd", "rust-doc.vim");
 }
 
 main();

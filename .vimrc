@@ -331,3 +331,4 @@ au! BufNewFile,BufRead *.glslf,*.glslv set filetype=glsl
 
 nnoremap <silent> <leader>b :CommandTMRU<CR>
 let g:CommandTFileScanner='find'
+let g:rust_doc#downloaded_rust_doc_dir='/usr/local/'
