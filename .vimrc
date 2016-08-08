@@ -75,7 +75,7 @@ map <leader>l              :call WinMove('l')<cr>
 map <leader>j              :call WinMove('j')<cr>
 
 if has('unix')
-	set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/target/*,*/.ensime_lucene/*,*/bin/*   " for Linux/MacOSX
+	set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/target/*,*/.ensime_lucene/*,*/bin/*,target/*   " for Linux/MacOSX
 else
 	set wildignore+=.git\*,.hg\*,.svn\*,target\*,.ensime_lucene\*,bin\*         " for Windows
 end
