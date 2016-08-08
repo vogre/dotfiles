@@ -79,6 +79,7 @@ sub vimplugins
     getplugin("sgur", "vim-textobj-parameter");
     getplugin("rhysd", "rust-doc.vim");
     getplugin("mhinz", "vim-startify");
+    getplugin("chrisbra", "NrrwRgn");
 }
 
 main();
