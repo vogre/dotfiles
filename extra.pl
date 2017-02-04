@@ -50,6 +50,7 @@ sub vimplugins
     getplugin("sgur", "vim-textobj-parameter");
     getplugin("mhinz", "vim-startify");
     getplugin("chrisbra", "NrrwRgn");
+    getplugin("w0rp", "ale");
 }
 
 main();
