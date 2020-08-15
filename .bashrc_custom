@@ -1,0 +1,29 @@
+HISTSIZE=-1
+HISTFILESIZE=-1
+PROMPT_COMMAND="history -a; $PROMPT_COMMAND"
+# http://ezprompt.net/
+function nonzero_return() {
+	RETVAL=$?
+	[ $RETVAL -ne 0 ] && echo "[😞$RETVAL"]
+}
+
+if [[ ${EUID} == 0 ]] ; then
+	PS1='`nonzero_return`\[\033[01;31m\][\h\[\033[01;36m\] \W\[\033[01;31m\]]\$\[\033[00m\] '
+else
+	PS1='`nonzero_return`\[\033[01;32m\][\u@\h\[\033[01;37m\] \W\[\033[01;32m\]]\$\[\033[00m\] '
+fi
+# https://stackoverflow.com/questions/19943482/configure-shell-to-always-print-prompt-on-new-line-like-zsh
+set_prompt() {
+  # CSI 6n reports the cursor position as ESC[n;mR, where n is the row
+  # and m is the column. Issue this control sequence and silently read
+  # the resulting report until reaching the "R". By setting IFS to ";"
+  # in conjunction with read's -a flag, fields are placed in an array.
+  local curpos
+  echo -en '\033[6n'
+  IFS=';' read -s -d R -a curpos
+  curpos[0]="${curpos[0]:2}"  # strip leading ESC[
+  (( curpos[1] > 1 )) && echo -e '\033[7m%\033[0m'
+
+  # set PS1...
+}
+PROMPT_COMMAND="set_prompt; $PROMPT_COMMAND"

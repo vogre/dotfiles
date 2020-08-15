@@ -1,0 +1,12 @@
+set bell-style none
+set completion-ignore-case on
+# Only need a single tab press to show results
+set show-all-if-ambiguous on
+# You ever do that thing where you put your cursorright in the middle of a word,
+# like you're at the "e" in "Makefile", and hit tab, and bash oh-so-helpfully
+# inserts the latter half of the word right in the middle of it -- so you've
+# got "Makefilefile" sitting in your terminal?
+# Yeah fuck that
+set skip-completed-text on
+set menu-complete-display-prefix on
+TAB:menu-complete

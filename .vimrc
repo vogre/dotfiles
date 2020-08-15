@@ -1,37 +1,28 @@
 set nocompatible
-syntax on
-filetype plugin indent on
-set completeopt-=preview
+call plug#begin('~/.vim/plugged')
+Plug 'kana/vim-textobj-user'
+Plug 'Julian/vim-textobj-variable-segment'
+Plug 'Yggdroot/LeaderF'
+Plug 'itchyny/lightline.vim'
+Plug 'dyng/ctrlsf.vim'
+Plug 'flazz/vim-colorschemes'
+Plug 'machakann/vim-swap'
+Plug 'tpope/vim-surround'
+Plug 'qpkorr/vim-bufkill'
+call plug#end()
+
 set ignorecase
 set smartcase
 set hlsearch
 set incsearch
 set showcmd
 set gdefault
-set nowrap
 set noshowmatch
+set hidden
 set list listchars=tab:»\ ,trail:·
-
 let maplocalleader = ","
 let mapleader = ","
-set hidden
-
-set directory=/tmp
-set backupdir=/tmp
-
 set fileencodings=ucs-bom,utf-8,latin1
-
-nnoremap <silent><C-j> m`:silent +g/\m^\s*$/d<CR>``:noh<CR>
-nnoremap <silent><C-k> m`:silent -g/\m^\s*$/d<CR>``:noh<CR>
-nnoremap <silent><A-j> :set paste<CR>m`o<Esc>``:set nopaste<CR>
-nnoremap <silent><A-k> :set paste<CR>m`O<Esc>``:set nopaste<CR>
-
-nmap <Leader><space> :noh<CR>
-nmap <Leader>co :copen<CR>
-nmap <Leader>cc :cclose<CR>
-nmap <Leader>n :cn<CR>
-nmap <Leader>p :cp<CR>
-
 if has('gui_running')
         set go-=m "remove menubar
         set go-=T "remove menubar
@@ -39,83 +30,31 @@ if has('gui_running')
         set go-=l
         set go-=r
         set go-=b
-        colorscheme zenburn
         set guifont=Source\ Code\ Pro\ Medium\ 10
 end
 
-function! WinMove(key)
-  let t:curwin = winnr()
-  exec "wincmd ".a:key
-  if (t:curwin == winnr()) "we havent moved
-    if (match(a:key,'[jk]')) "were we going up/down
-      wincmd v
-    else 
-      wincmd s
-    endif
-    exec "wincmd ".a:key
-  endif
-endfunction
-
-map <leader>h              :call WinMove('h')<cr>
-map <leader>k              :call WinMove('k')<cr>
-map <leader>l              :call WinMove('l')<cr>
-map <leader>j              :call WinMove('j')<cr>
-
-if has('unix')
-        set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/target/*,*/.ensime_lucene/*,*/bin/*,target/*   " for Linux/MacOSX
-else
-        set wildignore+=.git\*,.hg\*,.svn\*,target\*,.ensime_lucene\*,bin\*         " for Windows
-end
-
-" Reselect visual block after indent:
-vnoremap < <gv
-vnoremap > >gv
-
-" Make Y behave like other capitals
-nnoremap Y y$
-
-set expandtab
-set nofoldenable
-
-set nu
-
-nmap <leader>m :call SaveMake()<cr>
-nmap <f9> :call SaveMake()<cr>
-imap <f9> <Esc>:call SaveMake()<cr>
-
-set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P
 set laststatus=2
+nmap <Leader><space> :noh<CR>
+vnoremap <leader>y "+y
 
-set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯЖ;ABCDEFGHIJKLMNOPQRSTUVWXYZ:,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
-set cmdheight=2
 
-function SaveMake()
-        wall
-        echo "Running makefile"
-        make!
-        redraw!
-        cw
-endfunction
-
-nmap <Leader>rl :set rightleft<cr>
-nmap <Leader>lr :set norightleft<cr>
-
-nmap <Leader>t :CommandT<CR>
-nmap <Leader>b :CommandTBuffer<CR>
-
-if &diff
-  " double the width up to a reasonable maximum
-  let &columns = ((&columns*2 > 172)? 172: &columns*2)
-endif
-
-let g:CommandTFileScanner='find'
-
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-endif
-let g:ale_lint_on_save = 1
-let g:ale_lint_on_text_changed = 0
-let g:ale_lint_on_enter = 0
-
-let g:ale_linters = {'rust': ['cargo']}
-
+" https://github.com/dyng/ctrlsf.vim#use-your-own-map
+nmap     <C-F>f <Plug>CtrlSFPrompt
+vmap     <C-F>f <Plug>CtrlSFVwordPath
+vmap     <C-F>F <Plug>CtrlSFVwordExec
+nmap     <C-F>n <Plug>CtrlSFCwordPath
+nmap     <C-F>p <Plug>CtrlSFPwordPath
+nnoremap <C-F>o :CtrlSFOpen<CR>
+nnoremap <C-F>t :CtrlSFToggle<CR>
+inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
+let g:ctrlsf_auto_focus = {
+    \ "at": "start"
+    \ }
+" Do not interfere with leaderf keys
+let g:BufKillCreateMappings = 0
+set backupdir=.backup/,~/.backup/,/tmp//
+set directory=.swp/,~/.swp/,/tmp//
+set undodir=.undo/,~/.undo/,/tmp//
+" as seen in https://github.com/vim/vim/issues/549
+" make Ctrl-G consistently show relative path if available
+autocmd BufReadPost * silent! lcd .
